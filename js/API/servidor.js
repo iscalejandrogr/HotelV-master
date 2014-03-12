@@ -1,31 +1,32 @@
-//Servidor
-function enviarRegistro(nombre,telefono,email,foto){
+//servidor
+function enviarDatos(nom,mail,tel,foto){
 	$.ajax({
 		type: "POST",
-		url: "http://igitsoft.com/pgtest.php",
-		data: "nom="+nombre+"&tel="+telefono+"&ema="+email+"&id="+disp()['id']
+		url: "http://10.175.11.74/pgtest.php",
+		data: "nom="+nom+"&mai="+mail+"&tel="+tel
 	}).done(function(msg){
 		if(msg==1){
-			//Subir Foto
-			uploadPhoto(foto,nombre);
+			$('.title div').text('Subiendo Foto');
+			subirFoto(foto);	
 		}else{
-			navigator.notification.alert("Los datos no fueron enviados correctamente", null, "Error de Registro", "Aceptar");
+			navigator.notification.alert("Hubo un error en el registro",null,"Error","Aceptar");
 		}
 	});
 }
 
-function reservarHb(t,p,h,d){
+function enviarReservas(th,pr,ha,di){
+	alert(0);
 	$.ajax({
 		type: "POST",
-		url: "http://igitsoft.com/pgtest.php",
-		data: "t="+t+"&p="+p+"&h="+h+"&d="+d
-	}).done(function(msg){
+		url: "http://10.175.11.74/pgtest.php",
+		data: "t="+th+"&p="+pr+"&h="+ha+"&d="+di
+	}).done(function(msg) {
 		if(msg==1){
-			navigator.notification.alert('Reserva Realizada Correctamente', function(){
-				window.location.href = '#page';
-			}, 'Reserva','Aceptar');
+			navigator.notification.alert("Datos Enviados Correctamente",function(){
+				crearHistorial(th,pr,ha,di);
+			},"Reserva Realizada","Aceptar");	
 		}else{
-			navigator.notification.alert("No se pudo sincronizar la reserva, Esperando conexión a internet", null, "Error de Sincronización", "Aceptar");
+			navigator.notification.alert("Hubo un error en el registro",null,"Error","Aceptar");
 		}
 	});
 }

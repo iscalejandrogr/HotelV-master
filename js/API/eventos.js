@@ -1,47 +1,61 @@
-//Eventos
-$(document).ready(function(){
+//eventos
+$(function(){
 	document.addEventListener("deviceready", function(){
-		if(!isLogin())
-			window.location.href = '#login';
+		if(!estaRegistrado())
+			window.location.href="#registro";
+		$('#regEnv').tap(function(){
+			var nom = $('#regNom').val();
+			var mail = $('#regEma').val();
+			var tel = $('#regTel').val();
+			var foto = $('#regFoto').attr('foto');
+			
+			if(nom != '' && mail != '' && tel != '' && foto != '' && foto != undefined){
+				$('.loader').show();
+				$('.title div').text('enviando datos');
+				$(this).hide();
+				enviarDatos(nom,mail,tel,foto);
+			}else{
+				navigator.notification.alert('Todos los campos son requeridos',null,'Error','Aceptar');
+			}
+		});
+		
+		//Tomar Foto
 		$('#regFoto').tap(function(){
 			tomarFoto();
 		});
-		$('#regEnviar').tap(function(){
-			var nom = $('#regNom').val();
-			var email = $('#regEmail').val();
-			var tel = $('#regTel').val();
-			var foto = $('#regFoto').attr('rel');
-			if(nom != '' && email != '' && tel != '' && foto != undefined && foto != ''){
-				enviarRegistro(nom, tel, email, foto);
-			}else{
-				navigator.notification.alert('Todos los campos son requeridos', null, 'Error de Registro', 'Aceptar');
+		
+		//Acciones de nueva reserva
+		$('#nr1 ul:eq(0) li').tap(function(){
+			if($(this).index()>0){
+				$('#nr1 ul:eq(0) li').css('background','');
+				$(this).css('background','yellow');
+				$('#nr1').attr('th',$(this).index());
 			}
 		});
-		$('#nr1 li').tap(function(){
-			if($(this).index()!=0){
-				switch($(this).index()){
-					case 1:
-						$('#nr2').attr('th',1);
-						break;
-					case 2:
-						$('#nr2').attr('th',2);
-						break;
-					case 3:
-						$('#nr2').attr('th',3);
-				}
+		$('#nrSig').tap(function(){
+			if($('#nr1').attr('th') != undefined && $('#nr1').attr('th') != '')
 				window.location.href = '#nr2';
-			}
 		});
-		$('#nr2 a[data-role=button]').tap(function(){
-			var th = $('#nr2').attr('th');
-			var pr = $('#nr2 select:eq(0)').val();
-			var hb = $('#nr2 select:eq(1)').val();
-			var ds = $('#nr2 select:eq(2)').val();
+		$('#resEnv').tap(function(){
+			var pr = $('#resPer').val();
+			var ha = $('#resHab').val();
+			var di = $('#resDia').val();
+			var th = $('#nr1').attr('th');
 			
-			if(navigator.connection.type != Connection.NONE)
-				reservarHb(th, pr, hb, ds);
+			//Preguntamos si está conectado o no
+			if(estaConectado())
+				enviarReservas(th,pr,ha,di);//Sincronizamos datos con el servidor
 			else
-				reservaInt(th, pr, hb, ds);
+				crearReservas(th,pr,ha,di);//Guardamos datos localmente
+		});
+		document.addEventListener("online",leerReservas,false);
+		$('#page ul[data-role=listview] li:eq(1)').tap(function(){
+			//leerHistorial();
 		});
 	}, false);
 });
+
+/*(function jQuery(selector){
+	...
+	return obj;
+})$;*/

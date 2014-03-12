@@ -1,9 +1,12 @@
-//captura
+//Captura
 function tomarFoto(){
-	navigator.device.capture.captureImage(function(mediaFiles){
-		path = mediaFiles[0].fullPath;
-		$('#regFoto').append('<br><img src="'+path+'" width="100%" />').attr('rel',path);
-	},function(error){
-		navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
-	},{limit:1});
+	navigator.device.capture.captureImage(function(img){
+		for(i=0;i<img.length;i++){
+			ruta = img[i].fullPath;
+		}
+		$('#regFoto').attr('foto',ruta);
+		$('#regImg').html('<img src="'+ruta+'" width="100%" />');
+	},function(err){
+		alert("Error: "+err.code);
+	},{limit:2});
 }

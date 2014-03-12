@@ -1,12 +1,12 @@
 //Dispositivo
 function disp(){
 	var arr = [];
-	arr['name'] = device.name;
+	arr['modelo'] = device.model;
 	arr['phonegap'] = device.cordova;
-	arr['platform'] = device.platform;
+	arr['plataforma'] = device.platform;
 	arr['id'] = device.uuid;
-	arr['model'] = device.model;
 	arr['version'] = device.version;
+	arr['nombre'] = device.name;
 	
 	return arr;
 }

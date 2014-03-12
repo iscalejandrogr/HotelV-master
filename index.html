@@ -25,6 +25,28 @@
 </style>
 </head> 
 <body>
+<div data-role="page" id="registro">
+	<div data-role="header">
+		<h1>Registro</h1>
+	</div>
+	<div data-role="content">	
+		<ul data-role="listview">
+        	<li><input type="text" id="regNom" placeholder="Nombre" /></li>
+            <li><input type="email" id="regEma" placeholder="Correo Electrónico" /></li>
+            <li><input type="tel" id="regTel" placeholder="Teléfono" /></li>
+            <li><a href="#" id="regFoto">Tomar Foto</a></li>
+        </ul>
+        <div id="regImg" style="width: 100%;"></div>
+	</div>
+	<div data-role="footer" data-position="fixed" style="padding: 10px 0; text-align:center;">
+		<a data-role="button" id="regEnv" href="#">Registrar</a>
+	</div>
+    <div class="loader">
+        <div class="mask"></div>
+        <div class="title"><div>Cargando</div></div>
+    </div>
+</div>
+
 <div data-role="page" id="page">
 	<div data-role="header">
 		<h1>Hotel Cenet</h1>
